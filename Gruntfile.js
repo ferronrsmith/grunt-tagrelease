@@ -1,6 +1,6 @@
 /*
  * grunt-tagrelease
- * https://github.com/Darsain/grunt-tagrelease
+ * https://github.com/ferronrsmith/grunt-tagrelease
  *
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/MIT
@@ -12,12 +12,12 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		jshint: {
 			options: {
-				jshintrc: '.jshintrc',
+				jshintrc: '.jshintrc'
 			},
 			all: [
 				'Gruntfile.js',
 				'tasks/*.js',
-			],
+			]
 		},
 		tagrelease: 'test/metafile.json'
 	});

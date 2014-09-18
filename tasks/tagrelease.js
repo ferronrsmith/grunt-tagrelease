@@ -1,6 +1,6 @@
 /*
  * grunt-tagrelease
- * https://github.com/Darsain/grunt-tagrelease
+ * https://github.com/ferronrsmith/grunt-tagrelease
  *
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/MIT
@@ -39,15 +39,6 @@ var git = {
 			return !!String(tag).trim();
 		});
 	},
-	getHighestTag: function () {
-		var highestTag = '0.0.0';
-		this.getTags().forEach(function (tag) {
-			if (semver.valid(tag) && semver.gt(tag, highestTag)) {
-				highestTag = tag;
-			}
-		});
-		return highestTag;
-	},
 	isClean: function () {
 		return exec('git diff-index --quiet HEAD --').code === 0;
 	},
@@ -70,7 +61,6 @@ module.exports = function(grunt) {
 
 	// Task definition
 	grunt.registerTask('tagrelease', 'Tagging a new release.', function () {
-		grunt.log.warn('grunt-tagrelease is being deprecated in favor of grunt-release. Please migrate.');
 		var config = grunt.config('tagrelease');
 		switch (typeof config) {
 			case 'string':
@@ -93,7 +83,7 @@ module.exports = function(grunt) {
 			commit:  true,
 			message: 'Release %version%',
 			prefix:  '',
-			annotate: false,
+			annotate: false
 		}, config);
 		var newVersion, buildMeta, newTag;
 
@@ -143,14 +133,9 @@ module.exports = function(grunt) {
 			return;
 		}
 
-		// Get the current highest repository tag
-		var highestTag = git.getHighestTag();
-
-		// Check whether the new tag is higher than the current highest tag
-		if (highestTag && (buildMeta ?
-			!(semver.gte(newVersion, highestTag) && !git.tagExists(newTag)) :
-			!semver.gt(newVersion, highestTag))) {
-			failed('Version "' + newVersion + '" is lower or equal than the current highest tag "' + highestTag + '".');
+		// Check if the tag name is already in use
+		if (git.tagExists(newTag)) {
+			failed("A tag already exists with the name " + newTag);
 			return;
 		}
 
@@ -165,7 +150,6 @@ module.exports = function(grunt) {
 		var tagging = exec('git tag ' + (o.annotate ? '-a -m "' + message + '" ' : ' ') + o.prefix + newVersion);
 		if (tagging.code !== 0) {
 			failed('Couldn\'t tag the last commit.', tagging.output);
-			return;
 		} else {
 			grunt.log.writeln('Tagged as: ' + newTag.cyan);
 		}

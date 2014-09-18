@@ -1,18 +1,17 @@
 {
 	"name": "grunt-tagrelease",
-	"description": "This plugin is being deprecated in favor of grunt-release, and will be eventually unpublished. Please migrate.",
-	"version": "0.3.3",
-	"homepage": "https://github.com/darsain/grunt-tagrelease",
-	"author": {
-		"name": "Darsain",
-		"url": "http://darsa.in"
+	"description": "Simple tagging library",
+	"version": "0.0.01",
+	"homepage": "https://github.com/ferronrsmith/grunt-tagrelease",
+	"forker": {
+		"name": "Ferron"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/darsain/grunt-tagrelease.git"
+		"url": "git@github.com:ferronrsmith/grunt-tagrelease.git"
 	},
 	"bugs": {
-		"url": "https://github.com/darsain/grunt-tagrelease/issues"
+		"url": "https://github.com/ferronrsmith/grunt-tagrelease/issues"
 	},
 	"licenses": [
 		{
